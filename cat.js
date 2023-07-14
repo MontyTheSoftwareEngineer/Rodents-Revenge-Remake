@@ -153,7 +153,7 @@ class Cat {
     }
 
     async move() {
-        while ( this.state !== "dead" )
+        while ( this.state !== "dead" && gameState !== "game-over" )
         {
             //check if cat is dead
             if ( this.state === "dead" )

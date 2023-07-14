@@ -26,6 +26,7 @@ function preload() {
 
 function newGame() {
   console.log("New game starting")  
+  gameState = "playing"
   //set all tiles to null first
   for ( let counter = 0; counter < gridSize * gridSize; counter++ )
   {
@@ -134,6 +135,9 @@ function draw() {
   {
     if ( cats[ catCount ].isAlive() )
       anyAlive = true;
+
+    if ( cats[catCount].checkCollision( mousePos[0], mousePos[1] ) )
+      gameState = "game-over"
     cats[catCount].display()
   }
 
@@ -144,16 +148,36 @@ function draw() {
     newGame()
   }
 
+  if ( gameState === "game-over" )
+  {
+    textSize(48)
+    fill( 128, 128, 128, 128 );
+    noStroke();
+    rect( 0, 0, gridSize * cellSize, gridSize * cellSize )
+    
+    fill( 256, 256, 0, 256 );
+    textAlign(CENTER, CENTER);
+    text("GAME OVER!", gridSize * cellSize/2, gridSize * cellSize/2);
+  }
+
+  textSize(16);
+  fill(0);
+  textAlign(LEFT, TOP);
+  text("Level " + (catLimit - 1), 10, 10);
+
 }
 
 function keyPressed() {
-  if (key === 'w' || key === 'W' || keyCode === UP_ARROW) {
-    moveVertically(-1)
-  } else if (key === 'a' || key === 'A' || keyCode === LEFT_ARROW) {
-    moveHorizontally(-1)
-  } else if (key === 's' || key === 'S' || keyCode === DOWN_ARROW) {
-    moveVertically( 1 )
-  } else if (key === 'd' || key === 'D' || keyCode === RIGHT_ARROW) {
-    moveHorizontally(1)
+  if ( gameState !== "game-over" )
+  {
+    if (key === 'w' || key === 'W' || keyCode === UP_ARROW) {
+      moveVertically(-1)
+    } else if (key === 'a' || key === 'A' || keyCode === LEFT_ARROW) {
+      moveHorizontally(-1)
+    } else if (key === 's' || key === 'S' || keyCode === DOWN_ARROW) {
+      moveVertically( 1 )
+    } else if (key === 'd' || key === 'D' || keyCode === RIGHT_ARROW) {
+      moveHorizontally(1)
+    }
   }
 }
