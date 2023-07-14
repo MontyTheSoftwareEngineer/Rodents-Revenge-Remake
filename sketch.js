@@ -1,5 +1,6 @@
 const gridSize = 23;
 let catLimit = 2;
+let rockLimit = 0
 let cellSize;
 
 let mouseStartPos;
@@ -8,6 +9,7 @@ let mouseImage;
 let blockImage;
 let catImage;
 let catDeadImage;
+let rockImage;
 
 let gameMap = []
 let cats = []
@@ -19,6 +21,7 @@ function preload() {
   blockImage = loadImage('assets/brick.png');
   catImage = loadImage( 'assets/cat.png' )
   catDeadImage = loadImage( 'assets/sit.png' )
+  rockImage = loadImage( 'assets/rocks.png' )
 }
 
 function newGame() {
@@ -48,6 +51,17 @@ function newGame() {
         gameMap[tileNum] = "brick";
       }
     }
+  }
+
+  //create rocks
+  for ( let rockCount = 0; rockCount < rockLimit; rockCount++ ) {
+    let randPos = Math.floor( Math.random() * gridSize * gridSize );
+    while ( gameMap[randPos] !== "brick") {
+      randPos = Math.floor( Math.random() * gridSize * gridSize );
+    }
+
+    gameMap[ randPos ] = "rock"
+    rockCount++;
   }
 
   //create enemies
@@ -85,9 +99,23 @@ function draw() {
       const xPos = x * cellSize;
       const yPos = y * cellSize;
       let currTile = gameMap[NumFrom2D( x, y )];
-      if ( currTile === "brick" || currTile === "mouse" )
+      if ( currTile === "brick" || currTile === "mouse" || currTile === "rock" )
       {
-        let tileImage = ( currTile === "brick" ? blockImage : mouseImage )
+        let tileImage;
+        switch( currTile ) {
+          case "brick": {
+            tileImage = blockImage;
+            break;
+          }
+          case "mouse": {
+            tileImage = mouseImage;
+            break;
+          }
+          case "rock": {
+            tileImage = rockImage;
+            break;
+          }
+        }
         image( tileImage, xPos, yPos, cellSize, cellSize );
       }
       // else {
@@ -111,6 +139,7 @@ function draw() {
 
   if ( !anyAlive )
   {
+    rockLimit++;
     catLimit++;
     newGame()
   }

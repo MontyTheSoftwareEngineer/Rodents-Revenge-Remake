@@ -34,23 +34,23 @@ class Cat {
         // Check up
         if (this.y - 1 >= 0) {
             const nextTile = getTile(this.x, this.y - 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("up");
             }
         }
         
         // Check down
-        if (this.y + 1 < this.gridSize - 1) {
+        if (this.y + 1 < this.gridSize ) {
             const nextTile = getTile(this.x, this.y + 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("down");
             }
         }
         
         // Check right
-        if (this.x + 1 < this.gridSize - 1) {
+        if (this.x + 1 < this.gridSize ) {
             const nextTile = getTile(this.x + 1, this.y);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("right");
             }
         }
@@ -58,7 +58,7 @@ class Cat {
         // Check left
         if (this.x - 1 >= 0) {
             const nextTile = getTile(this.x - 1, this.y);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("left");
             }
         }
@@ -66,7 +66,7 @@ class Cat {
         // Check top-right diagonal
         if (this.x + 1 < this.gridSize - 1 && this.y - 1 >= 0) {
             const nextTile = getTile(this.x + 1, this.y - 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("top-right");
             }
         }
@@ -74,7 +74,7 @@ class Cat {
         // Check top-left diagonal
         if (this.x - 1 >= 0 && this.y - 1 >= 0) {
             const nextTile = getTile(this.x - 1, this.y - 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("top-left");
             }
         }
@@ -82,7 +82,7 @@ class Cat {
         // Check bottom-right diagonal
         if (this.x + 1 < this.gridSize - 1 && this.y + 1 < this.gridSize - 1) {
             const nextTile = getTile(this.x + 1, this.y + 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("bottom-right");
             }
         }
@@ -90,7 +90,7 @@ class Cat {
         // Check bottom-left diagonal
         if (this.x - 1 >= 0 && this.y + 1 < this.gridSize - 1) {
             const nextTile = getTile(this.x - 1, this.y + 1);
-            if (nextTile !== "brick" && nextTile !== "cat") {
+            if (nextTile !== "brick" && nextTile !== "cat" && nextTile !== "rock") {
             validMoves.push("bottom-left");
             }
         }
@@ -163,7 +163,7 @@ class Cat {
             let validMoves = this.checkValidMoves();
 
             //check if cat state should be dead
-            if( validMoves.length === 0 ) {
+            if( validMoves.length < 1 ) {
                 //console.log("CAT DEAD")
                 this.state = "dead"
                 return;

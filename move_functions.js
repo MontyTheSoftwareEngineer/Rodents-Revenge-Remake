@@ -21,7 +21,8 @@ function moveHorizontally( displacement ) {
       {
         lastBrickX += displacement;
       }
-      if ( lastBrickX < 0 || lastBrickX >= gridSize || getTile( lastBrickX, mousePos[1] ) === "cat")
+      let lastTile = getTile( lastBrickX, mousePos[1] );
+      if ( lastBrickX < 0 || lastBrickX >= gridSize ||  lastTile === "cat" ||  lastTile === "rock")
         return;
         
       console.log( "Last X: ", lastBrickX );
@@ -66,7 +67,9 @@ function moveHorizontally( displacement ) {
       {
         lastBrickY += displacement;
       }
-      if ( lastBrickY < 0 || lastBrickY >= gridSize || getTile( mousePos[0], lastBrickY ) === "cat") 
+      
+      let lastTile = getTile( mousePos[0], lastBrickY );
+      if ( lastBrickY < 0 || lastBrickY >= gridSize || lastTile === "cat" || lastTile === "rock") 
         return;
         
       console.log( "Last Y: ", lastBrickY );
