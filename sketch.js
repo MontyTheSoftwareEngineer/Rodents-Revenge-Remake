@@ -12,6 +12,7 @@ let catDeadImage;
 let gameMap = []
 let cats = []
 let testCat
+let gameState = "game-over"
 
 function preload() {
   mouseImage = loadImage('assets/mouse.png');
@@ -21,6 +22,7 @@ function preload() {
 }
 
 function newGame() {
+  console.log("New game starting")  
   //set all tiles to null first
   for ( let counter = 0; counter < gridSize * gridSize; counter++ )
   {
@@ -45,18 +47,24 @@ function newGame() {
         let tileNum = NumFrom2D( x, y)
         gameMap[tileNum] = "brick";
       }
-      else {
-        if (Math.random() < 0.25 && catCount < catLimit ) {
-          console.log("Creating cat at: ", x, ",",y)
-          catCount++
-          let tileNum = NumFrom2D(x, y);
-          gameMap[tileNum] = "cat";
-          let newCat = new Cat( x, y, catImage, catDeadImage, cellSize, cellSize, gridSize )
-          newCat.move()
-          cats.push( newCat )
-      }
     }
+  }
+
+  //create enemies
+  cats.splice(0, cats.length);
+
+  for ( let catCount = 0; catCount < catLimit; catCount++ )
+  {
+    console.log("Creating cat: ", catCount );
+    let randPos = Math.floor( Math.random() * gridSize * gridSize );
+    while ( gameMap[randPos] !== "null") {
+      randPos = Math.floor( Math.random() * gridSize * gridSize );
     }
+    let newCatCoords = NumTo2D( randPos );
+    let newCat = new Cat( newCatCoords[0], newCatCoords[1], catImage, catDeadImage, cellSize, cellSize, gridSize );
+    newCat.move()
+    gameMap[ randPos ] = "cat"
+    cats.push( newCat )
   }
 }
 
@@ -103,7 +111,6 @@ function draw() {
 
   if ( !anyAlive )
   {
-    cats.splice(0, cats.length);
     catLimit++;
     newGame()
   }

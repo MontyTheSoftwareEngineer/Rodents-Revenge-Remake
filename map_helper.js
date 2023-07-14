@@ -6,7 +6,7 @@ function NumFrom2D( x, y )
 function NumTo2D( inputNum )
 {
   let x = Math.floor( inputNum / gridSize );
-  let y = inputNum - ( y * gridSize );
+  let y = inputNum - ( x * gridSize );
   return [x,y]
 }
 
